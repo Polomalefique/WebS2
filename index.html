@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyse Loyers 2025</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Indicateurs de loyers par commune (2025)</h1>
+        <p>Source des données : <a href="https://www.data.gouv.fr">data.gouv.fr</a></p>
+    </header>
+
+    <main>
+        <section id="search-bar">
+            <input type="text" id="inputCommune" placeholder="Rechercher une commune...">
+            <button id="btnChercher">Chercher</button>
+        </section>
+
+        <section id="stats">
+            <div class="stat-card">Moyenne : <span id="moyenne">-</span> €/m²</div>
+            <div class="stat-card">Min : <span id="min">-</span> €/m²</div>
+            <div class="stat-card">Max : <span id="max">-</span> €/m²</div>
+            <button onclick="trierParLoyer()">Trier par prix</button>
+        </section>
+
+        <section id="affichage-donnees">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code INSEE</th>
+                        <th>Commune</th>
+                        <th>Loyer au m²</th>
+                        <th>Loyer (T2 50 m²)</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Projet réalisé par Paul-Henry, Sami et Clément</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="load.js"></script>
+</body>
+</html>
