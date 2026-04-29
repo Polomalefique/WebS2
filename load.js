@@ -21,7 +21,7 @@ function afficherDonnees(liste) {
     corpsTableau.innerHTML = "";
     calculerStats(liste);
 
-    liste.slice(0, 50).forEach(item => {
+    liste.slice(0, 2000).forEach(item => {
         const ligne = document.createElement('tr');
         
         let prixMetreCarre = parseFloat(item.loypredm2);
