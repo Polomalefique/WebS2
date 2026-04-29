@@ -29,6 +29,7 @@ function afficherDonnees(liste) {
 
         ligne.innerHTML = `
             <td>${item.INSEE_C}</td>
+            <td>${item.DEP}</td>
             <td>${item.LIBGEO}</td>
             <td><strong>${prixMetreCarre.toFixed(2)} €</strong></td>
             <td>${prixTotalExemple.toFixed(0)} €</td>
