@@ -57,12 +57,18 @@ function calculerStats(liste) {
 }
 
 const input = document.getElementById('inputCommune');
+
 if (input) {
     input.addEventListener('input', (e) => {
         const recherche = e.target.value.toLowerCase();
-        const filtre = donneesPropres.filter(item => 
-            item.LIBGEO.toLowerCase().includes(recherche)
-        );
+        
+        const filtre = donneesPropres.filter(item => {
+            const correspondDepartement = item.INSEE_C.startsWith(recherche);
+            const correspondCommune = item.LIBGEO.toLowerCase().includes(recherche);
+            
+            return correspondDepartement || correspondCommune;
+        });
+        
         afficherDonnees(filtre);
     });
 }
@@ -83,5 +89,7 @@ function trierParLoyer() {
     triAscendant = !triAscendant;
     afficherDonnees(donneesPropres);
 }
+
+
 
 afficherDonnees(donneesPropres);
