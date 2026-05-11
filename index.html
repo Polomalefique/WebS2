@@ -13,11 +13,26 @@
 
     <main>
         <section id="search-bar">
-            <input type="text" id="inputCommune" placeholder="Ex: 37 ou Tours...">
-            <button id="btnChercher">Chercher</button>
+            <input type="text" id="inputDpt" placeholder="Département (ex: 14)" maxlength="3">
+            <input type="text" id="inputCommune" placeholder="Commune (ex: Caen)">
+            <button onclick="window.location.reload()">Reset</button>
+            <div class="limit-container">
+                <label for="limit">Afficher :</label>
+                <select id="selectLimit" onchange="filtrer()">
+                    <option value="20">20</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                    <option value="34875">Tout</option>
+        </select>
+    </div>
+            
         </section>
 
         <section id="stats">
+            <div class="stat-card">
+                <h3>Résultats</h3>
+                <span id="compteur">0</span>
+                <p>villes trouvées</p></div>
             <div class="stat-card">Moyenne : <span id="moyenne">-</span> €/m²</div>
             <div class="stat-card">Min : <span id="min">-</span> €/m²</div>
             <div class="stat-card">Max : <span id="max">-</span> €/m²</div>
@@ -42,7 +57,7 @@
     </main>
 
     <footer>
-        <p>Projet réalisé par Paul-Henry, Sami et Clément</p>
+        <p>Projet réalisé par PAUL-HENRY, Sami et Clément</p>
     </footer>
 
     <script src="data.js"></script>

@@ -2,6 +2,8 @@ if (typeof data === 'undefined') {
     console.error("Le fichier data.js n'est pas chargé. Vérifie l'ordre des scripts dans index.html");
 }
 
+let resultatsActuels = []
+
 const donneesPropres = data.map(obj => {
     let nouveauObj = {};
     for (let cle in obj) {
@@ -11,17 +13,18 @@ const donneesPropres = data.map(obj => {
     }
     return nouveauObj;
 });
+resultatsActuels = [...donneesPropres];
 
 console.log("Premier objet nettoyé :", donneesPropres[0]);
 
-function afficherDonnees(liste) {
+function afficherDonnees(liste, limite=50) {
     const corpsTableau = document.getElementById('table-body');
     if (!corpsTableau) return;
     
     corpsTableau.innerHTML = "";
     calculerStats(liste);
 
-    liste.slice(0, 2000).forEach(item => {
+    liste.slice(0, limite).forEach(item => {
         const ligne = document.createElement('tr');
         
         let prixMetreCarre = parseFloat(item.loypredm2);
@@ -39,9 +42,22 @@ function afficherDonnees(liste) {
 }
 
 function calculerStats(liste) {
-    const spanMoy = document.getElementById('moyenne');
-    if (!spanMoy || liste.length === 0) return;
+    // 1. On met à jour le compteur de résultats
+    const spanCompteur = document.getElementById('compteur');
+    if (spanCompteur) {
+        spanCompteur.innerText = liste.length.toLocaleString(); // .toLocaleString() ajoute les espaces pour les milliers (ex: 30 000)
+    }
 
+    const spanMoy = document.getElementById('moyenne');
+    if (!spanMoy || liste.length === 0) {
+        // Si la liste est vide, on remet les stats à zéro
+        if(spanMoy) spanMoy.innerText = "-";
+        document.getElementById('min').innerText = "-";
+        document.getElementById('max').innerText = "-";
+        return;
+    }
+
+    // ... le reste de ton code pour les loyers (Moyenne, Min, Max) ...
     const loyers = liste.map(item => {
         let val = item.loypredm2 ? item.loypredm2.replace(',', '.') : "0";
         return parseFloat(val);
@@ -56,38 +72,53 @@ function calculerStats(liste) {
     document.getElementById('max').innerText = max.toFixed(2);
 }
 
-const input = document.getElementById('inputCommune');
+const inputDpt = document.getElementById('inputDpt');
+const inputCommune = document.getElementById('inputCommune');
 
-if (input) {
-    input.addEventListener('input', (e) => {
-        const recherche = e.target.value.toLowerCase();
-        
-        const filtre = donneesPropres.filter(item => {
-            const correspondDepartement = item.INSEE_C.startsWith(recherche);
-            const correspondCommune = item.LIBGEO.toLowerCase().includes(recherche);
-            
-            return correspondDepartement || correspondCommune;
-        });
-        
-        afficherDonnees(filtre);
+function filtrer() {
+    const dptRecherche = inputDpt.value.trim();
+    const villeRecherche = inputCommune.value.toLowerCase().trim();
+    const limite = parseInt(document.getElementById('selectLimit').value);
+
+    // On stocke le résultat du filtre dans notre variable globale
+    resultatsActuels = donneesPropres.filter(item => {
+        const codeNettoye = item.INSEE_C.replace(/[^0-9]/g, '');
+        const matchDpt = codeNettoye.startsWith(dptRecherche);
+        const matchVille = item.LIBGEO.toLowerCase().includes(villeRecherche);
+        return matchDpt && matchVille;
     });
+
+    afficherDonnees(resultatsActuels, limite);
 }
 
+// 3. On branche les écouteurs sur les deux barres
+if (inputDpt) inputDpt.addEventListener('input', filtrer);
+if (inputCommune) inputCommune.addEventListener('input', filtrer);
+
+// --- FIN DU REMPLACEMENT ---
+
+
+afficherDonnees(donneesPropres);
 let triAscendant = true;
 
 function trierParLoyer() {
-    donneesPropres.sort((a, b) => {
+    const limite = parseInt(document.getElementById('selectLimit').value);
+
+    // On trie uniquement ce qui est affiché (resultatsActuels)
+    resultatsActuels.sort((a, b) => {
         let prixA = parseFloat(a.loypredm2.replace(',', '.'));
         let prixB = parseFloat(b.loypredm2.replace(',', '.'));
 
-        if (triAscendant) {
-            return prixA - prixB; 
-        } else {
-            return prixB - prixA; 
-        }
+        return triAscendant ? prixA - prixB : prixB - prixA;
     });
+
     triAscendant = !triAscendant;
-    afficherDonnees(donneesPropres);
+    
+    // On met à jour le texte du bouton pour le style
+    const btn = document.querySelector("button[onclick='trierParLoyer()']");
+    if(btn) btn.innerText = triAscendant ? "Prix ⬆️" : "Prix ⬇️";
+
+    afficherDonnees(resultatsActuels, limite);
 }
 
 
