@@ -42,22 +42,21 @@ function afficherDonnees(liste, limite=50) {
 }
 
 function calculerStats(liste) {
-    // 1. On met à jour le compteur de résultats
+   
     const spanCompteur = document.getElementById('compteur');
     if (spanCompteur) {
-        spanCompteur.innerText = liste.length.toLocaleString(); // .toLocaleString() ajoute les espaces pour les milliers (ex: 30 000)
+        spanCompteur.innerText = liste.length.toLocaleString(); 
     }
 
     const spanMoy = document.getElementById('moyenne');
     if (!spanMoy || liste.length === 0) {
-        // Si la liste est vide, on remet les stats à zéro
+        
         if(spanMoy) spanMoy.innerText = "-";
         document.getElementById('min').innerText = "-";
         document.getElementById('max').innerText = "-";
         return;
     }
 
-    // ... le reste de ton code pour les loyers (Moyenne, Min, Max) ...
     const loyers = liste.map(item => {
         let val = item.loypredm2 ? item.loypredm2.replace(',', '.') : "0";
         return parseFloat(val);
@@ -80,7 +79,7 @@ function filtrer() {
     const villeRecherche = inputCommune.value.toLowerCase().trim();
     const limite = parseInt(document.getElementById('selectLimit').value);
 
-    // On stocke le résultat du filtre dans notre variable globale
+    
     resultatsActuels = donneesPropres.filter(item => {
         const codeNettoye = item.INSEE_C.replace(/[^0-9]/g, '');
         const matchDpt = codeNettoye.startsWith(dptRecherche);
@@ -91,11 +90,11 @@ function filtrer() {
     afficherDonnees(resultatsActuels, limite);
 }
 
-// 3. On branche les écouteurs sur les deux barres
+
 if (inputDpt) inputDpt.addEventListener('input', filtrer);
 if (inputCommune) inputCommune.addEventListener('input', filtrer);
 
-// --- FIN DU REMPLACEMENT ---
+
 
 
 afficherDonnees(donneesPropres);
@@ -104,7 +103,7 @@ let triAscendant = true;
 function trierParLoyer() {
     const limite = parseInt(document.getElementById('selectLimit').value);
 
-    // On trie uniquement ce qui est affiché (resultatsActuels)
+    
     resultatsActuels.sort((a, b) => {
         let prixA = parseFloat(a.loypredm2.replace(',', '.'));
         let prixB = parseFloat(b.loypredm2.replace(',', '.'));
@@ -114,7 +113,7 @@ function trierParLoyer() {
 
     triAscendant = !triAscendant;
     
-    // On met à jour le texte du bouton pour le style
+    
     const btn = document.querySelector("button[onclick='trierParLoyer()']");
     if(btn) btn.innerText = triAscendant ? "Prix ⬆️" : "Prix ⬇️";
 

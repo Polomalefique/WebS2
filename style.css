@@ -1,11 +1,11 @@
 :root {
-    --primary: #1e293b;       /* Bleu nuit moderne */
-    --accent: #3b82f6;        /* Bleu vif pour les actions */
-    --bg: #f8fafc;            /* Gris très clair */
+    --primary: #1e293b;       
+    --accent: #3b82f6;        
+    --bg: #f8fafc;            
     --card-bg: #ffffff;
     --text-main: #334155;
     --text-muted: #64748b;
-    --radius: 12px;           /* Arrondi plus prononcé */
+    --radius: 12px;           
 }
 
 body {
@@ -21,11 +21,11 @@ header {
     color: white;
     padding: 3rem 1rem;
     text-align: center;
-    margin-bottom: -40px; /* Pour faire remonter les stats sur le header */
+    margin-bottom: -40px; 
 }
 
 header a {
-    color: #94a3b8; /* Un gris-bleu clair élégant */
+    color: #94a3b8; 
     text-decoration: none;
     font-weight: 500;
     border-bottom: 1px solid transparent;
@@ -43,7 +43,7 @@ main {
     padding: 0 20px;
 }
 
-/* Barre de recherche style "Apple" */
+
 #search-bar {
     background: var(--card-bg);
     padding: 20px;
@@ -51,12 +51,12 @@ main {
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     display: flex;
     gap: 15px;
-    margin: -30px auto 40px auto; /* Le 'auto' sur les côtés centre le bloc */
-    justify-content: center;      /* Centre les inputs à l'intérieur */
-    align-items: center;          /* Aligne verticalement au centre */
-    max-width: 800px;             /* Empêche la barre d'être trop large */
+    margin: -30px auto 40px auto; 
+    justify-content: center;      
+    align-items: center;          
+    max-width: 800px;             
     border: 1px solid #e2e8f0;
-    position: relative;           /* Pour bien flotter sur le header */
+    position: relative;           
     z-index: 10;
 }
 
@@ -74,10 +74,10 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Cartes de Stats */
+
 #stats {
     display: grid;
-    /* Cela crée 4 colonnes égales si possible, sinon ça s'adapte */
+    
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 20px;
     margin-bottom: 40px;
@@ -108,7 +108,7 @@ input:focus {
     margin: 10px 0;
 }
 
-/* Tableau Stylisé */
+
 #affichage-donnees {
     background: var(--card-bg);
     border-radius: var(--radius);
@@ -141,7 +141,7 @@ tr:hover {
     background-color: #f8fafc;
 }
 
-/* Boutons */
+
 button {
     background: var(--accent);
     color: white;
